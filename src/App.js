@@ -1,11 +1,11 @@
 import React from 'react';
-import { ImageFetcher } from './ImageFetcher';
+import { LocationFetcher } from './LocationFetcher';
 import { Map } from './Map';
 
 function App() {
   return (
     <div className="content">
-      <ImageFetcher />
+      <LocationFetcher />
       <Map />
     </div>
   );

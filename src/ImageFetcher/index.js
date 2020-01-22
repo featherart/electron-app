@@ -1,1 +1,1 @@
-export { ImageFetcher } from './ImageFetcher'
+export { LocationFetcher } from './LocationFetcher'
