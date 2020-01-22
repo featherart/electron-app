@@ -16,7 +16,25 @@ export const ImageFetcher = props => {
         content_type: 'marker'
       })
       .then(response => {
-        setAssetList(response && response.items);
+        const items = response.items.map( item => {
+          // make this a function?
+          const { title, description, coordinates: {lat, lon }, imageName } = item.fields;
+          const { fileName, url } = imageName.fields.file;
+          const imageTitle = imageName.fields.file.title;
+          const imageDescription = imageName.fields.file.description;
+          return {
+            title,
+            lat,
+            lon,
+            description,
+            imageName,
+            fileName,
+            imageTitle,
+            imageDescription,
+            url
+          }
+        });
+        setAssetList(items);
         setLoading(false);
       });
   }, []);
@@ -26,16 +44,30 @@ export const ImageFetcher = props => {
       {loading && <span>loading...</span>}
       {assetList &&
         assetList.map((asset, i) => {
+          const {
+            title,
+            lat,
+            lon,
+            description,
+            imageName,
+            fileName,
+            imageTitle,
+            imageDescription,
+            url
+          } = asset;
           return (
-            <div>
-              <span style={{ display: 'block' }} key={i}>
-                {asset.fields.title}
+            <div key={i}>
+              <span style={{ display: 'block' }} key={title}>
+                {title}
+              </span>
+              <span style={{ display: 'block' }} key={lat}>
+                {lat}, {lon}
               </span>
               <img
-                alt={asset.fields.imageName.fields.file.fileName}
-                key={i}
+                alt={fileName}
+                key={imageName}
                 style={{ height: '100px', borderRadius: '50%' }}
-                src={asset.fields.imageName.fields.file.url}
+                src={url}
               />
             </div>
           );
