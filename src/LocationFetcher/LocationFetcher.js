@@ -41,7 +41,7 @@ export const LocationFetcher = props => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <Map />
+      {assetList.length > 0 && (<Map markers={assetList}/>) }
     </div>
   );
 };
