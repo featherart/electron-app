@@ -2,7 +2,6 @@ import React from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './map.css';
-//import Markers from './Markers';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
@@ -15,6 +14,7 @@ export class Map extends React.Component {
       zoom: 12
     };
   }
+
   componentDidMount() {
     const map = new mapboxgl.Map({
       container: this.mapContainer,
@@ -22,7 +22,29 @@ export class Map extends React.Component {
       center: [ this.state.lng, this.state.lat ],
       zoom: this.state.zoom
     });
+    const { markers } = this.props;
+    // add markers to map
+    markers.forEach(marker => {
+      const { lon, lat, imageName } = marker;
+      const { fields: { file: { url } } } = imageName;
+      console.log('url', url);
+
+      // create a DOM element for the marker
+      var el = document.createElement('div');
+      el.className = 'marker';
+      el.style.backgroundImage = url;
+      el.style.width = '52px';
+      el.style.height = '52px';
+
+      el.addEventListener('click', () => {
+        console.log('hi from marker');
+      });
+
+      // add marker to map
+      new mapboxgl.Marker(el).setLngLat([ lon, lat ]).addTo(map);
+    });
   }
+
   render() {
     return (
       <div>
@@ -31,20 +53,3 @@ export class Map extends React.Component {
     );
   }
 }
-
-/*
-<ReactMapGL
-  {...viewport}
-  onClick={() => console.log('hihihihi')}
-  doubleClickZoom={false}
-  style={geolocateStyle}
-  mapStyle={'mapbox://styles/mapbox/satellite-v9'}
-  mapboxApiAccessToken={TOKEN}
-  width={'100vw'}
-  height={'100vh'}
-  latitude={37.837}
-  longitude={-122.43}
-  zoom={12}
->
-</ReactMapGL>
-*/

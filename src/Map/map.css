@@ -5,3 +5,13 @@
   left: 0;
   bottom: 0;
   }
+
+  .marker {
+    background-color: red;
+    border-radius: 50%;
+  }
+
+  .marker:hover {
+    background-color: purple;
+    cursor: pointer;
+  }
