@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Map } from '../Map';
+import { MapView } from '../Map';
 const contentful = require('contentful');
 
 const client = contentful.createClient({
@@ -41,7 +41,7 @@ export const LocationFetcher = props => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {assetList.length > 0 && (<Map markers={assetList}/>) }
+      {assetList.length > 0 && (<MapView markers={assetList}/>) }
     </div>
   );
 };
