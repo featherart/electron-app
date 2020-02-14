@@ -9,7 +9,6 @@ const client = contentful.createClient({
 
 export const LocationFetcher = props => {
   const [ assetList, setAssetList ] = useState([]);
-  console.log('assetList', assetList)
 
   useEffect(() => {
     client
@@ -41,7 +40,7 @@ export const LocationFetcher = props => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {assetList.length > 0 && (<MapView markers={assetList}/>) }
+      {assetList.length > 0 && <MapView markers={assetList} />}
     </div>
   );
 };

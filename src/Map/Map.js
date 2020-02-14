@@ -6,45 +6,32 @@ import './map.css';
 
 export const MapView = ({ markers }) => {
   const Map = ReactMapboxGl({
-    accessToken:
-    process.env.REACT_APP_MAPBOX_TOKEN
-  });  
-  
-  const markeras = [
-    {
-      title: "atejl",
-      lat: -122.43,
-      lon: 37.837,
-      coordinates: [-122.43,37.837],
-      description: "ajshdfhajfs",
-      // imageName,
-      // fileName,
-      // imageTitle,
-      // imageDescription,
-      // url
-    }
-  ]
+    accessToken: process.env.REACT_APP_MAPBOX_TOKEN
+  });
+
   return (
     <Map
-      style='mapbox://styles/mapbox/satellite-v9'
+      style={"mapbox://styles/mapbox/satellite-v9"}
       containerStyle={{
         height: '100vh',
         width: '100vw'
       }}
       center={[ -122.43, 37.837 ]}
-      zoom={[12]}
-      markers={markeras}
-  >
-    {markeras.map( (marker) =>
-      <Marker
-      key={marker.lat}
-      coordinates={marker.coordinates}
-      anchor="bottom"
-      onClick={() => console.log("LJAKSDAS")}
-      >
-        <img height="40" width="40" src="https://www.pinclipart.com/picdir/big/359-3598915_map-marker-icon-location-icon-png-clipart.png" />
-      </Marker>
-    )}
-  </Map>
-    );
+      zoom={[ 12 ]}
+      markers={markers}
+    >
+      {markers.map(marker => {
+        const { lon, lat, url, imageName } = marker;
+        return (
+        <Marker
+          key={lat}
+          coordinates={[ lon, lat ]}
+          anchor="bottom"
+          onClick={() => console.log('clicked on', lon, lat)}
+        >
+          <img alt={imageName} height="50" width="50" src={marker.url} />
+        </Marker>
+      )})}
+    </Map>
+  );
 };
