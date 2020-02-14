@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { MapView } from '../Map';
 const contentful = require('contentful');
 
 const client = contentful.createClient({
@@ -15,9 +16,9 @@ export const LocationFetcher = props => {
         content_type: 'marker'
       })
       .then(response => {
-        const items = response.items.map( item => {
+        const items = response.items.map(item => {
           // make this a function?
-          const { title, description, coordinates: {lat, lon }, imageName } = item.fields;
+          const { title, description, coordinates: { lat, lon }, imageName } = item.fields;
           const { fileName, url } = imageName.fields.file;
           const imageTitle = imageName.fields.file.title;
           const imageDescription = imageName.fields.file.description;
@@ -31,7 +32,7 @@ export const LocationFetcher = props => {
             imageTitle,
             imageDescription,
             url
-          }
+          };
         });
         setAssetList(items);
       });
@@ -39,36 +40,7 @@ export const LocationFetcher = props => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
-      {assetList &&
-        assetList.map((asset, i) => {
-          const {
-            title,
-            lat,
-            lon,
-            description,
-            imageName,
-            fileName,
-            imageTitle,
-            imageDescription,
-            url
-          } = asset;
-          return (
-            <div key={i}>
-              <span style={{ display: 'block' }} key={title}>
-                {title}
-              </span>
-              <span style={{ display: 'block' }} key={lat}>
-                {lat}, {lon}
-              </span>
-              <img
-                alt={fileName}
-                key={imageName}
-                style={{ height: '100px', borderRadius: '50%' }}
-                src={url}
-              />
-            </div>
-          );
-        })}
+      {assetList.length > 0 && <MapView markers={assetList} />}
     </div>
   );
 };

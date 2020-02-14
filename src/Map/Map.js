@@ -1,41 +1,37 @@
-import React, { useState } from 'react';
-import ReactMapGL from 'react-map-gl';
+import React from 'react';
+import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
+
 import 'mapbox-gl/dist/mapbox-gl.css';
+import './map.css';
 
-const TOKEN = process.env.REACT_APP_MAPBOX_TOKEN;
-
-const geolocateStyle = {
-  padding: '10px'
-};
-
-export const Map = () => {
-  const [viewport, setViewPort ] = useState({
-    width: "100%",
-    height: 900,
-    latitude: 0,
-    longitude: 0,
-    zoom: 2
+export const MapView = ({ markers }) => {
+  const Map = ReactMapboxGl({
+    accessToken: process.env.REACT_APP_MAPBOX_TOKEN
   });
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-      <span style={{ display: 'flex', fontSize: '15px', fontWeight: 'bolder' }}>
-        Map
-      </span>
-      <ReactMapGL
-        style={geolocateStyle}
-        mapboxApiAccessToken={TOKEN}
-        width={400}
-        height={400}
-        latitude={37.7577}
-        longitude={-122.4376}
-        zoom={8}
-        {...viewport}
-        onViewportChange={viewport => {
-          const { width, height, latitude, longitude, zoom } = viewport;
-          // Optionally call `setState` and use the state to update the map.
-        }}
-      />
-    </div>
+    <Map
+      style={"mapbox://styles/mapbox/satellite-v9"}
+      containerStyle={{
+        height: '100vh',
+        width: '100vw'
+      }}
+      center={[ -122.43, 37.837 ]}
+      zoom={[ 12 ]}
+      markers={markers}
+    >
+      {markers.map(marker => {
+        const { lon, lat, url, imageName } = marker;
+        return (
+        <Marker
+          key={lat}
+          coordinates={[ lon, lat ]}
+          anchor="bottom"
+          onClick={() => console.log('clicked on', lon, lat)}
+        >
+          <img alt={imageName} height="50" width="50" src={marker.url} />
+        </Marker>
+      )})}
+    </Map>
   );
 };
