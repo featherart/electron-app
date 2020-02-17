@@ -1,10 +1,10 @@
 import React from 'react';
-import { LocationFetcher } from './LocationFetcher';
+import { MarkerFetcher } from './MarkerFetcher';
 
 function App() {
   return (
     <div className="content">
-      <LocationFetcher />
+      <MarkerFetcher />
     </div>
   );
 }

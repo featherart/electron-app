@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
+import ReactMapboxGl from 'react-mapbox-gl';
+import { MarkerWrapper } from './MarkerWrapper';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './map.css';
@@ -11,7 +12,7 @@ export const MapView = ({ markers }) => {
 
   return (
     <Map
-      style={"mapbox://styles/mapbox/satellite-v9"}
+      style={'mapbox://styles/mapbox/satellite-v9'}
       containerStyle={{
         height: '100vh',
         width: '100vw'
@@ -23,15 +24,15 @@ export const MapView = ({ markers }) => {
       {markers.map(marker => {
         const { lon, lat, url, imageName } = marker;
         return (
-        <Marker
-          key={lat}
-          coordinates={[ lon, lat ]}
-          anchor="bottom"
-          onClick={() => console.log('clicked on', lon, lat)}
-        >
-          <img alt={imageName} height="50" width="50" src={marker.url} />
-        </Marker>
-      )})}
+          <MarkerWrapper
+            key={lat}
+            lat={lat}
+            lon={lon}
+            url={url}
+            imageName={imageName}
+          />
+        );
+      })}
     </Map>
   );
 };
