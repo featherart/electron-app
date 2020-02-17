@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import ReactMapboxGl, { Marker, Popup } from 'react-mapbox-gl';
+import React from 'react';
+import ReactMapboxGl from 'react-mapbox-gl';
+import { MarkerWrapper } from './MarkerWrapper';
 
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './map.css';
@@ -8,7 +9,6 @@ export const MapView = ({ markers }) => {
   const Map = ReactMapboxGl({
     accessToken: process.env.REACT_APP_MAPBOX_TOKEN
   });
-  const [ showPopup, togglePopup ] = useState(false);
 
   return (
     <Map
@@ -24,25 +24,13 @@ export const MapView = ({ markers }) => {
       {markers.map(marker => {
         const { lon, lat, url, imageName } = marker;
         return (
-          <Marker
+          <MarkerWrapper
             key={lat}
-            coordinates={[ lon, lat ]}
-            anchor="bottom"
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              //togglePopup(!showPopup)
-            }}
-            >
-              {
-                showPopup &&
-                <Popup
-                  coordinates={[ lon, lat ]}
-                  offset={{'bottom-left': [12, -38],  'bottom': [0, -38], 'bottom-right': [-12, -38]}}
-                />
-              }
-            <img alt={imageName} height="40" width="40" src={url} />
-          </Marker>
+            lat={lat}
+            lon={lon}
+            url={url}
+            imageName={imageName}
+          />
         );
       })}
     </Map>

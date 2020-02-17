@@ -1,6 +1,8 @@
 .popup-container {
   position: absolute;
   background-color: white;
-  height: 293px;
-  width: 100px;
+  height: 200px;
+  width: 300px;
+  z-index: 1000;
+  transform: translate(-40%, -100%);
 }

@@ -7,7 +7,7 @@ const client = contentful.createClient({
   accessToken: process.env.REACT_APP_ACCESS_TOKEN
 });
 
-export const LocationFetcher = props => {
+export const MarkerFetcher = props => {
   const [ assetList, setAssetList ] = useState([]);
 
   useEffect(() => {
